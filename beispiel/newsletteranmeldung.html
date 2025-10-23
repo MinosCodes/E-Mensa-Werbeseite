@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+    <H1 style="margin-bottom: 0.5cm">Anmeldung</H1>
+    <form action="formdata.html" method="post">
+        <fieldset>
+            <legend><b>Ihre Anfrage</b></legend>
+            <p style="font-size: 0.4cm">Anrede<p>
+
+            <input type="checkbox" id="Frau">
+            <label for="Frau">Frau</label>
+            <br>
+            <input type="checkbox" id="Herr">
+            <label for="Herr">Herr</label>
+            <br>
+
+            <label for="fname">Vorname<sup>*</sup></label><br>
+            <input type="text" id="fname" placeholder="Bitte geben sie Ihren Vornamen ein" required>
+            <br>
+            <label for="lname">Nachname<sup>*</sup></label>
+            <br>
+            <input type="text" id="lname" placeholder="Bitte geben sie Ihren Nachnamen ein" required >
+            <br>
+            <label for="E-mail">E-Mail<sup>*</sup></label>
+            <br>
+            <input type="email" id="E-mail" placeholder="Bitte geben sie Ihren E-Mail ein" required>
+            <br>
+            <label>Benachrichtigungsinterval</label><br>
+            <select>
+                <option> Tag</option>
+                <option> Woche</option>
+                <option> Monat</option>
+            </select>
+            <br>
+            <br>
+            <input type="checkbox" required>
+            <input type="submit" value="DatenSchutzhinweise gelesen ">
+            <br>
+            <sup style="font-size: 0.3cm">*)</sup> Eingaben sind Pflicht
+        </fieldset>
+
+
+
+    </form>
+
+</body>
+</html>
