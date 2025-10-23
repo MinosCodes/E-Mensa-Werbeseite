@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!--
+- Praktikum DBWT. Autoren:
+- Adem, Essouei, 3730582
+- Mohamed-amine, Merdassi, 3729412
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Übung</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #word{
+            color: #ff9966;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        #etabelle{
+            border: 2px solid #ff9966;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .colored{
+            background-color: rgb(244,224,176);
+        }
+        li{
+            margin-top: 20px;
+        }
+        .center{
+            text-align: center;
+            border-bottom:2px solid #ff9966;
+            padding-bottom: 15px;
+        }
+        footer > ul{
+            list-style-type: none;
+            text-align: right;
+            padding: 0;
+            margin: 0;
+        }
+        footer > ul > li{
+            display: inline-block;
+            border-right: 1px solid #ff9966;
+            padding: 0 10px;
+            margin: 0;
+        }
+        footer > ul > li:last-child {
+            border-right: none;
+        }
+        abbr {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="elektro zeile">
+        <h1 id="elektro">Wofür steht das E in E-Mensa?</h1>
+        <p>Am besten zeigt man das in einer <a href="#etabelle" id="word">Tabelle</a>.</p>
+        <table id="etabelle">
+            <thead>
+            <tr class="colored">
+                <th>Bedeutung</th>
+                <th>Philosophie</th>
+                <th>Beispiele</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Elektro</td>
+                <td>Alles geht elektronisch</td>
+                <td>
+                    <ol>
+                        <li class="pflicht">Bestellung digital</li>
+                        <li class="pflicht">Bezahlen digital</li>
+                        <li>Essen digital</li>
+                        <li>Spülen digital</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr class="colored">
+                <td>Extravagant</td>
+                <td>Es gibt auch Ausgefallenes</td>
+                <td><p>Wir sind die einzige Mensa weit und breit mit </p>
+                    <ol>
+                        <li class="pflicht">Vanillesauerkraut</li>
+                        <li class="pflicht">Bohnensenfbrot</li>
+                        <li>Habaneroeiscreme</li>
+                        <li>Bananengulasch</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>Effizient</td>
+                <td>Schnell, lecker und qualitativ</td>
+                <td>
+                    <ol>
+                        <li class="pflicht">Frisch für Sie zubereitet, wann Sie es wollen</li>
+                        <li class="pflicht">Die Zutaten sind nachverfolgbar und immer tiefgekühlt</li>
+                        <li>Wir haben auch Samstags geöffnet. Sie sehen, wie effizient wir sind.</li>
+                    </ol>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="center">Da geht natürlich noch viel mehr, siehe nur <abbr title="Extra">E</abbr>.<br>Die Tabelle ist
+            aber schon ganz schön imposant so oder?</p>
+    </div>
+</main>
+<footer>
+    <ul>
+        <li>(c) DBWT</li>
+        <li>Hilfe</li>
+        <li>Datenschutz</li>
+        <li>Impressum</li>
+    </ul>
+</footer>
+</body>
+</html>
