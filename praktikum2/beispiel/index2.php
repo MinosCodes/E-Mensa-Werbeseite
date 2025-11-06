@@ -48,6 +48,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+$visitorFile = "visitors.txt";
+$visitorCount = 0;
+if(file_exists($visitorFile)){
+    $visitorCount = (int)file_get_contents($visitorFile);
+}
+$visitorCount++;
+file_put_contents($visitorFile, $visitorCount);
+
+
+
+$dishesFile = "gerichte.csv";
+$dishesCount = 0;
+if(file_exists($dishesFile)){
+    $lines = file($dishesFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $dishesCount = count($lines);
+}
+
+
+$newsletterFile = "newsletter.csv";
+$newsletterCount = 0;
+if(file_exists($newsletterFile)){
+    $lines = file($newsletterFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $newsletterCount = count($lines);
+}
+
+
 
 
 
@@ -247,10 +273,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <section id="zahlen">
     <h1 style="text-align:center;">E-Mensa in Zahlen</h1>
     <div class="containerZahlen">
-        <div>X Besuche</div>
-        <div>Y Anmeldungen zum Newsletter</div>
-        <div>Z Speisen</div>
+        <div><?php echo $visitorCount; ?> Besuche</div>
+        <div><?php echo $newsletterCount; ?> Anmeldungen zum Newsletter</div>
+        <div><?php echo $dishesCount; ?> Speisen</div>
     </div>
+
 </section>
 
 <section id="kontakt">
