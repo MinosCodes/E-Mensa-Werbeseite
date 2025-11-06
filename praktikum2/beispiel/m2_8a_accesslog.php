@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * - Praktikum DBWT. Autoren:
+ * - Adem, Essouei, 3730582
+ * - Mohamed-amine, Merdassi, 3729412
+ */
 // Datei: beispiele/m2_8a_accesslog.php
 
 // Zugriffsinformationen sammeln

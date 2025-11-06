@@ -1,4 +1,9 @@
 <?php
+/**
+ * - Praktikum DBWT. Autoren:
+ * - Adem, Essouei, 3730582
+ * - Mohamed-amine, Merdassi, 3729412
+ */
 const GET_PARAM_MIN_STARS = 'search_min_stars';
 const GET_PARAM_SEARCH_TEXT = 'search_text';
 

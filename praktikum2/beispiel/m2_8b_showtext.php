@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * - Praktikum DBWT. Autoren:
+ * - Adem, Essouei, 3730582
+ * - Mohamed-amine, Merdassi, 3729412
+ */
 // Check if 'suche' is provided
 if (empty($_GET['suche'])) {
     echo "Bitte geben Sie ein Suchwort über den GET-Parameter 'suche' an.";

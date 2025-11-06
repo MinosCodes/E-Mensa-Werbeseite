@@ -1,4 +1,9 @@
 <?php
+/**
+* - Praktikum DBWT. Autoren:
+* - Adem, Essouei, 3730582
+* - Mohamed-amine, Merdassi, 3729412
+*/
 $Errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
