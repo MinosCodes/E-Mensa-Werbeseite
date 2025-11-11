@@ -1,10 +1,9 @@
 <?php
 /**
- * - Praktikum DBWT. Autoren:
- * - Adem, Essouei, 3730582
- * - Mohamed-amine, Merdassi, 3729412
+ * Praktikum DBWT. Autoren:
+ * Adem, Essouei, 3730582
+ * Mohamed-amine, Merdassi, 3729412
  */
-// Datei: beispiele/m2_8a_accesslog.php
 
 // Zugriffsinformationen sammeln
 $datumUhrzeit = date('Y-m-d H:i:s'); // aktuelles Datum und Uhrzeit
@@ -26,6 +25,3 @@ if (file_put_contents($logDatei, $logEintrag, FILE_APPEND | LOCK_EX) === false) 
 } else {
     echo "Zugriff protokolliert.";
 }
-
-
-

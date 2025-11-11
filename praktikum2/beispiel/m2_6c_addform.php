@@ -1,20 +1,32 @@
 <?php
 /**
- * - Praktikum DBWT. Autoren:
- * - Adem, Essouei, 3730582
- * - Mohamed-amine, Merdassi, 3729412
+ * Praktikum DBWT. Autoren:
+ * Adem, Essouei, 3730582
+ * Mohamed-amine, Merdassi, 3729412
  */
-$result = '';
 
+include 'm2_6a_standardparameter.php';
 
-$a = $_GET['a'];
-$b = $_GET['b'];
+$operation_text = '';
+$result = null;
 
+if (isset($_POST['operation'])) {
 
-if (isset($_GET['addition'])) {
-    $result = $a + $b;
-} elseif (isset($_GET['multiplication'])) {
-    $result = $a * $b;
+    $a = isset($_POST['a']) ? (int)$_POST['a'] : 0;
+    $b = isset($_POST['b']) ? (int)$_POST['b'] : 0;
+
+    $operation = $_POST['operation'];
+
+    if ($operation === 'add') {
+        $result = addieren($a, $b);
+        $operation_text = 'Addition';
+    } elseif ($operation === 'multiply') {
+        $result = 0;
+        for ($i = 0; $i < $a; $i++) {
+            $result = addieren($result, $b);
+        }
+        $operation_text = 'Multiplikation';
+    }
 }
 ?>
 
@@ -22,27 +34,32 @@ if (isset($_GET['addition'])) {
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title> Multi/Addi</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        input, button { margin: 5px; }
-        #result { margin-top: 15px; font-weight: bold; }
-    </style>
+    <title>Addition/Multiplikationsformular</title>
 </head>
 <body>
-<h2>Rechner</h2>
-<form method="get" action="m2_6c_addform.php">
-    <label for="a">a: </label>
-    <input type="number" name="a" id="a" required value="<?php echo $a; ?>">
-    <label for="b">b: </label>
-    <input type="number" name="b" id="b" required value="<?php echo $b; ?>">
-    <br>
-    <button type="submit" name="addition">Addieren</button>
-    <button type="submit" name="multiplication">Multiplizieren</button>
-</form>
 
-<div id="result">
-    <?php echo "Ergebnis: $result"; ?>
-</div>
+<h2>Add / Mult</h2>
+
+<form action="" method="post">
+    <label for="a">Zahl a:</label>
+    <input type="number" id="a" name="a" value="<?php echo $a; ?>" required><br><br>
+
+    <label for="b">Zahl b:</label>
+    <input type="number" id="b" name="b" value="<?php echo $b; ?>" required><br><br>
+
+    <button type="submit" name="operation" value="add">addieren</button>
+
+    <button type="submit" name="operation" value="multiply">multiplizieren</button>
+
+    <div id="result">
+        <?php
+        if ($result !== null) {
+            echo "<h3>Ergebnis der $operation_text:</h3>";
+            echo "<p>Das Ergebnis von $a und $b ist: <strong>$result</strong></p>";
+        }
+        ?>
+    </div>
+
+</form>
 </body>
 </html>
