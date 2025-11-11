@@ -5,22 +5,15 @@
  * Mohamed-amine, Merdassi, 3729412
  */
 
-// Check if 'suche' is provided
-if (empty($_GET['suche'])) {
-    echo "Bitte geben Sie ein Suchwort über den GET-Parameter 'suche' an.";
-    exit;
-}
 
-$searchWord = $_GET['suche'];
-$filename = "en.txt";
-$found = false;
+
+
 
 // Check if 'suche' is provided
 if (empty($_GET['suche'])) {
     echo "Bitte geben Sie ein Suchwort über den GET-Parameter 'suche' an.";
     exit;
 }
-
 $searchWord = $_GET['suche'];
 $filename = "en.txt";
 $found = false;

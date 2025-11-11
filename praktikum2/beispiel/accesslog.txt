@@ -1,3 +1,7 @@
 2025-11-06 11:29:49 | IP: Unbekannt | Browser: Unbekannt
 2025-11-06 11:36:08 | IP: Unbekannt | Browser: Unbekannt
 2025-11-06 11:36:08 | IP: Unbekannt | Browser: Unbekannt
+2025-11-11 20:06:42 | IP: 127.0.0.1 | Browser: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0
+2025-11-11 20:06:42 | IP: 127.0.0.1 | Browser: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0
+2025-11-11 20:09:21 | IP: 127.0.0.1 | Browser: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0
+2025-11-11 20:09:21 | IP: 127.0.0.1 | Browser: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0
