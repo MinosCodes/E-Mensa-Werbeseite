@@ -29,7 +29,7 @@ $file = fopen($filename, "r");
 
 while (($line = fgets($file)) !== false) {
     if (stripos($line, $searchWord) !== false) {
-        echo nl2br($line); // Output matching translation
+        echo $line; // Output matching translation
         $found = true;
         break;
     }
