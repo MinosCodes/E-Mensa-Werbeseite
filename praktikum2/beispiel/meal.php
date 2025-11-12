@@ -102,7 +102,7 @@ if (!empty($_GET[GET_PARAM_SEARCH_TEXT])){
         }
     }
 } else if (!empty($_GET[GET_PARAM_HIGHLIGHT])) {
-    $highlightMode = $_GET[GET_PARAM_HIGHLIGHT];
+        $highlightMode = $_GET[GET_PARAM_HIGHLIGHT];
 
     if ($highlightMode === 'top') {
         foreach ($ratings as $rating) {
