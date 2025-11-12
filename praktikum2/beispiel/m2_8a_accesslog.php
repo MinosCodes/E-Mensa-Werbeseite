@@ -16,10 +16,10 @@ $logEintrag = "$datumUhrzeit | IP: $ipClient | Browser: $browser" . PHP_EOL;
 // Datei-Pfad
 $logDatei = __DIR__ . '/accesslog.txt';
 
-// Logzeile anhängen (erstellt Datei, falls sie nicht existiert)
+// Logzeile anhängen
 file_put_contents($logDatei, $logEintrag, FILE_APPEND);
 
-// Optional: Info auf der Webseite ausgeben
+
 if (file_put_contents($logDatei, $logEintrag, FILE_APPEND) === false) {
     echo "Fehler: konnte Datei nicht schreiben!";
 } else {
