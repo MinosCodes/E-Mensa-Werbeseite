@@ -11,6 +11,11 @@
             "emensawerbeseite"      // Auswahl der Datenbanken (bzw. des Schemas)
     // optional port der Datenbank
     );
+    /* Fetching data from emensawerbseite.gericht to display later in the table Limit the
+       Limit them to 5 elements .
+        Joining gericht id and gericht_hat_allergen by id to display all codes for the same gericht next to eachother
+
+    */
     $sql = "SELECT 
         gericht.id,
         gericht.name,
@@ -26,21 +31,17 @@
     LIMIT 5;
     ";
 
-
+    /*
+     * Fetch the Azahl from gericht table to display it in the webseite
+     * */
     $sql2 = "SELECT COUNT(*) AS anzahl_gericht FROM gericht ";
     $resultAnzahlgericht = mysqli_query($link, $sql2);
     $result = mysqli_query($link, $sql);
     $rowAnzahlgericht = mysqli_fetch_assoc($resultAnzahlgericht);
 
-    /*
-    while ($row = mysqli_fetch_assoc($result)) {
-        echo '<li>',$row['name'], ':', $row['beschreibung'],$row['erfasst_am'], ':',$row['preisextern'], ':' , '</li>';
-    }*/
-
-
-
-
-
+/*
+ * Collect Errors to display them in a list when user tries to sign up for the newsletter
+ * */
     $Errors = [];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -274,7 +275,10 @@
                 <th>Inhaltsstoffe</th>
                 <th>Foto</th>
             </tr>
-            <?php $dishesArray = [];
+
+            <?php
+            //Logic for sorting ASC OR DESC based on a query through URL on the 5 current displayed elements
+            $dishesArray = [];
             while ($row = mysqli_fetch_assoc($result)) {
                 $dishesArray[] = $row;
             }
@@ -290,7 +294,9 @@
                 }
             });
             ?>
-            <?php foreach ($dishesArray as $dish): ?>
+            <?php
+            //loop through the dishes array and display the corresponding values in the webseite
+            foreach ($dishesArray as $dish): ?>
             <tr>
                 <td><?php echo $dish['name'] ; ?></td>
                 <td><?php echo $dish['beschreibung']; ?></td>
@@ -316,9 +322,9 @@
     <section id="zahlen">
         <h1 style="text-align:center;">E-Mensa in Zahlen</h1>
         <div class="containerZahlen">
-            <div><?php echo $visitorCount; ?> Besuche</div>
-            <div><?php echo $newsletterCount; ?> Anmeldungen zum Newsletter</div>
-            <div><?php echo $rowAnzahlgericht['anzahl_gericht']; ?> Speisen </div>
+            <div><?php /* Display the visitorCount*/ echo $visitorCount; ?> Besuche</div>
+            <div><?php /* Display the newsletterCount*/ echo $newsletterCount; ?> Anmeldungen zum Newsletter</div>
+            <div><?php /* Display the anzahlgericht*/ echo $rowAnzahlgericht['anzahl_gericht']; ?> Speisen </div>
     </section>
 
     <section id="kontakt">
@@ -355,6 +361,7 @@
             </div>
 
             <?php
+            //Print Errors if something went wrong durring sign up
             if(!empty($Errors)){
                 echo "<div style='color:red; text-align:center; margin-top:10px;'>";
                 foreach($Errors as $Error){
