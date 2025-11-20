@@ -94,9 +94,9 @@
     // Update the counter
 
     mysqli_query($link, "UPDATE visitor_counter SET count = count + 1 WHERE id = 1");
-    $result3 = mysqli_query($link, "SELECT count FROM visitor_counter WHERE id = 1");
-    $row3 = mysqli_fetch_assoc($result3);
-    $visitorCount = $row3['count'];
+    $resultVisitorCounter = mysqli_query($link, "SELECT count FROM visitor_counter WHERE id = 1");
+    $rowVisitorCounter = mysqli_fetch_assoc($resultVisitorCounter);
+    $visitorCount = $rowVisitorCounter['count'];
 
 
 
