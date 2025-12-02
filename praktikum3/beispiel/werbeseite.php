@@ -305,17 +305,28 @@
                 <td><?php echo $dish['preisextern'] ,' €'; ?></td>
                 <td><?php echo $dish['codes']; ?></td>
                 <td>
-                    <?php $imagePath = 'img/' . $dish['Bilddatei'];?>
-                    <img src="<?php echo $imagePath; ?>" alt="Bild von <?php echo $dish['Gericht']; ?>" style="width: 150px;">
+                    <img src="img/<?php echo $dish['id']; ?>.png"
+                         alt="Bild von <?php echo htmlspecialchars($dish['name']); ?>"
+                         style="width: 150px;">
                 </td>
+
             </tr>
             <?php endforeach; ?>
         </table>
+
         <p>
             Sortieren nach Name:
             <a href="?sort=ASC" <?= $sort === 'ASC' ? 'style="font-weight:bold;"' : '' ?>>Aufsteigend</a> |
             <a href="?sort=DESC" <?= $sort === 'DESC' ? 'style="font-weight:bold;"' : '' ?>>Absteigend</a>
         </p>
+        <?php $sql_codes = "SELECT code, name FROM allergen ORDER BY code";
+        $result_codes = mysqli_query($link, $sql_codes);
+        echo "<ul style='text-align:left;'>";
+            while ($row = mysqli_fetch_assoc($result_codes)) {
+            echo "<li><strong>" . $row['code'] . "</strong> : " . $row['name'] ."</li>";
+            }
+            echo "</ul>";
+        ?>
 
     </section>
 
