@@ -47,7 +47,8 @@ class HomeController
             'errors' => $errors,
             'success' => $success,
             'formData' => $formData,
-            'csrfToken' => $_SESSION['csrf_token']
+            'csrfToken' => $_SESSION['csrf_token'],
+            'loggedInUser' => $this->getLoggedInUser()
         ]);
     }
     
@@ -206,5 +207,47 @@ class HomeController
         }
 
         return [$errors, $success];
+    }
+
+    private function getLoggedInUser(): ?array
+    {
+        $email = $_SESSION['user_email'] ?? '';
+        if ($email === '') {
+            return null;
+        }
+
+        $link = connectdb();
+        if ($link === false) {
+            return ['email' => $email, 'displayName' => $email];
+        }
+
+        $sql = "SELECT vorname, name FROM benutzer WHERE email = ? LIMIT 1";
+        $stmt = mysqli_prepare($link, $sql);
+
+        if ($stmt === false) {
+            mysqli_close($link);
+            return ['email' => $email, 'displayName' => $email];
+        }
+
+        mysqli_stmt_bind_param($stmt, 's', $email);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $vorname, $nachname);
+
+        $displayName = null;
+        if (mysqli_stmt_fetch($stmt)) {
+            $vorname = trim($vorname ?? '');
+            $nachname = trim($nachname ?? '');
+            $combined = trim($vorname . ' ' . $nachname);
+            $displayName = $combined !== '' ? $combined : null;
+        }
+
+        mysqli_stmt_close($stmt);
+        mysqli_close($link);
+
+        if ($displayName === null) {
+            $displayName = $email;
+        }
+
+        return ['email' => $email, 'displayName' => $displayName];
     }
 }

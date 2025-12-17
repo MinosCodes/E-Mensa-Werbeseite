@@ -8,6 +8,10 @@ const ROUTER_VERSION = '0.8.5';
 assert_php_version('8.2.0');
 assert_path();
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 try {
     if (!file_exists(realpath($_SERVER['DOCUMENT_ROOT'] . "/../vendor/autoload.php"))) {
         echo "<h1>Abhängigkeiten nicht gefunden</h1><pre>DOCUMENT_ROOT: {$_SERVER['DOCUMENT_ROOT']}</pre><br><p>Datei nicht gefunden: <strong>{$_SERVER['DOCUMENT_ROOT']}/../vendor/autoload.php</strong></p>";

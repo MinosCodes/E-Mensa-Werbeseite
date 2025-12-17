@@ -20,6 +20,8 @@ return array(
     // Erstes Beispiel:
     '/m4_6a_queryparameter' => 'ExampleController@m4_6a_queryparameter',
     '/m4' => 'ExampleController@m4_6a_queryparameter',
+    '/anmeldung' => 'AuthController@show',
+    '/anmeldung_verfizieren' => 'AuthController@verify',
     '/wunschgericht' => 'LegacyController@wunschgericht',
     '/m4_7a_queryparameter' => 'ExampleController@m4_7a_queryparameter',
     '/m4_7b_kategorie' => 'ExampleController@m4_7b_kategorie',

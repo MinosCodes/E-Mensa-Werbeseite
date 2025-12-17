@@ -7,7 +7,14 @@
 @section('content')
     <div class="col-12 home-wrapper">
         <header class="site-header" id="top">
-            <div class="logo">E-Mensa Logo</div>
+            <div class="site-header__top">
+                <div class="logo">E-Mensa Logo</div>
+                @if(!empty($loggedInUser))
+                    <div class="login-status" aria-live="polite">
+                        Angemeldet als <strong>{{ $loggedInUser['displayName'] }}</strong>
+                    </div>
+                @endif
+            </div>
             <nav class="navBar" aria-label="Hauptnavigation">
                 <a href="#ankuendigung">Ankündigung</a>
                 <a href="#speisen">Speisen</a>
