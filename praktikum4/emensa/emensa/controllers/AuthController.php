@@ -47,31 +47,37 @@ class AuthController
 
     private function recordSuccessfulLogin(string $email): void
     {
-        if ($email === '') {
-            return;
-        }
+        $this->executeLoginTransaction($email, static function ($link, $mail) {
+            $sql = 'UPDATE benutzer SET anzahlanmeldungen = anzahlanmeldungen + 1, letzteanmeldung = NOW() WHERE email = ?';
+            $stmt = mysqli_prepare($link, $sql);
 
-        $link = connectdb();
-        if ($link === false) {
-            return;
-        }
+            if ($stmt === false) {
+                throw new RuntimeException('Konnte Erfolgs-Statement nicht vorbereiten.');
+            }
 
-        $sql = 'UPDATE benutzer SET anzahlanmeldungen = anzahlanmeldungen + 1, letzteanmeldung = NOW() WHERE email = ?';
-        $stmt = mysqli_prepare($link, $sql);
-
-        if ($stmt === false) {
-            mysqli_close($link);
-            return;
-        }
-
-        mysqli_stmt_bind_param($stmt, 's', $email);
-        mysqli_stmt_execute($stmt);
-
-        mysqli_stmt_close($stmt);
-        mysqli_close($link);
+            mysqli_stmt_bind_param($stmt, 's', $mail);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        });
     }
 
     private function recordFailedLogin(string $email): void
+    {
+        $this->executeLoginTransaction($email, static function ($link, $mail) {
+            $sql = 'UPDATE benutzer SET letzterfehler = NOW(), anzahlfehler = anzahlfehler + 1 WHERE email = ?';
+            $stmt = mysqli_prepare($link, $sql);
+
+            if ($stmt === false) {
+                throw new RuntimeException('Konnte Fehler-Statement nicht vorbereiten.');
+            }
+
+            mysqli_stmt_bind_param($stmt, 's', $mail);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        });
+    }
+
+    private function executeLoginTransaction(string $email, callable $operation): void
     {
         if ($email === '') {
             return;
@@ -82,18 +88,15 @@ class AuthController
             return;
         }
 
-        $sql = 'UPDATE benutzer SET letzterfehler = NOW(), anzahlfehler = anzahlfehler + 1 WHERE email = ?';
-        $stmt = mysqli_prepare($link, $sql);
+        mysqli_begin_transaction($link);
 
-        if ($stmt === false) {
+        try {
+            $operation($link, $email);
+            mysqli_commit($link);
+        } catch (Throwable $e) {
+            mysqli_rollback($link);
+        } finally {
             mysqli_close($link);
-            return;
         }
-
-        mysqli_stmt_bind_param($stmt, 's', $email);
-        mysqli_stmt_execute($stmt);
-
-        mysqli_stmt_close($stmt);
-        mysqli_close($link);
     }
 }
