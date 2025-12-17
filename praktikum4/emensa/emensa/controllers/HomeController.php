@@ -77,6 +77,7 @@ class HomeController
     {
         $link = connectdb();
         $sql = "SELECT g.id, g.name, g.beschreibung, g.erfasst_am, g.preisintern, g.preisextern,
+                       g.bildname,
                        GROUP_CONCAT(gha.code ORDER BY gha.code SEPARATOR ', ') AS codes
                 FROM gericht g
                 LEFT JOIN gericht_hat_allergen gha ON g.id = gha.gericht_id
@@ -85,6 +86,11 @@ class HomeController
 
         $result = mysqli_query($link, $sql);
         $gerichte = $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
+
+        foreach ($gerichte as &$gericht) {
+            $gericht['image_path'] = $this->resolveDishImagePath($gericht);
+        }
+        unset($gericht);
 
         if ($result) {
             mysqli_free_result($result);
@@ -247,5 +253,40 @@ class HomeController
         }
 
         return ['email' => $email, 'displayName' => $displayName];
+    }
+
+    private function resolveDishImagePath(array $gericht): string
+    {
+        $publicBase = '/img/gerichte/';
+        $absoluteBase = dirname(__DIR__) . '/public/img/gerichte/';
+        $fallback = $publicBase . '00_image_missing.jpg';
+
+        $filename = trim($gericht['bildname'] ?? '');
+        if ($filename !== '') {
+            $absolutePath = $absoluteBase . $filename;
+            if (file_exists($absolutePath)) {
+                return $publicBase . $filename;
+            }
+        }
+
+        $id = (int)($gericht['id'] ?? 0);
+        if ($id > 0) {
+            $patterns = [
+                sprintf('%s%02d_*.*', $absoluteBase, $id),
+                sprintf('%s%d_*.*', $absoluteBase, $id)
+            ];
+
+            foreach ($patterns as $pattern) {
+                $matches = glob($pattern, GLOB_NOSORT);
+                if (!empty($matches)) {
+                    $firstMatch = basename($matches[0]);
+                    if ($firstMatch !== '') {
+                        return $publicBase . $firstMatch;
+                    }
+                }
+            }
+        }
+
+        return $fallback;
     }
 }

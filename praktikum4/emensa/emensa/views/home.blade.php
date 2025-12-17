@@ -65,7 +65,7 @@
                             <td>{{ number_format((float)$gericht['preisextern'], 2, ',', '.') }} €</td>
                             <td>{{ $gericht['codes'] ?? '' }}</td>
                             <td>
-                                <img src="/img/{{ $gericht['id'] }}.png" alt="Bild von {{ $gericht['name'] }}">
+                                <img src="{{ $gericht['image_path'] }}" alt="Bild von {{ $gericht['name'] }}" width="160" height="120" loading="lazy">
                             </td>
                         </tr>
                     @empty
