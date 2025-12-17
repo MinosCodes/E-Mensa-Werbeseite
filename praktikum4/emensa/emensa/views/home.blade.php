@@ -11,7 +11,8 @@
                 <div class="logo">E-Mensa Logo</div>
                 @if(!empty($loggedInUser))
                     <div class="login-status" aria-live="polite">
-                        Angemeldet als <strong>{{ $loggedInUser['displayName'] }}</strong>
+                        <span>Angemeldet als <strong>{{ $loggedInUser['displayName'] }}</strong></span>
+                        <a href="/abmeldung" class="logout-link">Abmelden</a>
                     </div>
                 @endif
             </div>
