@@ -82,7 +82,7 @@ class AuthController
             return;
         }
 
-        $sql = 'UPDATE benutzer SET letzterfehler = NOW() WHERE email = ?';
+        $sql = 'UPDATE benutzer SET letzterfehler = NOW(), anzahlfehler = anzahlfehler + 1 WHERE email = ?';
         $stmt = mysqli_prepare($link, $sql);
 
         if ($stmt === false) {

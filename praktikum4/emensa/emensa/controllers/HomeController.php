@@ -221,7 +221,7 @@ class HomeController
             return ['email' => $email, 'displayName' => $email];
         }
 
-        $sql = "SELECT vorname, name FROM benutzer WHERE email = ? LIMIT 1";
+        $sql = "SELECT name FROM benutzer WHERE email = ? LIMIT 1";
         $stmt = mysqli_prepare($link, $sql);
 
         if ($stmt === false) {
@@ -231,14 +231,12 @@ class HomeController
 
         mysqli_stmt_bind_param($stmt, 's', $email);
         mysqli_stmt_execute($stmt);
-        mysqli_stmt_bind_result($stmt, $vorname, $nachname);
+        mysqli_stmt_bind_result($stmt, $name);
 
         $displayName = null;
         if (mysqli_stmt_fetch($stmt)) {
-            $vorname = trim($vorname ?? '');
-            $nachname = trim($nachname ?? '');
-            $combined = trim($vorname . ' ' . $nachname);
-            $displayName = $combined !== '' ? $combined : null;
+            $name = trim($name ?? '');
+            $displayName = $name !== '' ? $name : null;
         }
 
         mysqli_stmt_close($stmt);
