@@ -80,17 +80,24 @@ class AuthController
 
     private function recordSuccessfulLogin(string $email): void
     {
-        $this->executeLoginTransaction($email, static function ($link, $mail) {
-            $sql = 'UPDATE benutzer SET anzahlanmeldungen = anzahlanmeldungen + 1, letzteanmeldung = NOW() WHERE email = ?';
-            $stmt = mysqli_prepare($link, $sql);
-
-            if ($stmt === false) {
-                throw new RuntimeException('Konnte Erfolgs-Statement nicht vorbereiten.');
+        $this->executeLoginTransaction($email, function ($link, $mail) {
+            $userId = $this->findUserIdByEmail($link, $mail);
+            if ($userId === null) {
+                throw new RuntimeException('Benutzer konnte nicht ermittelt werden.');
             }
 
-            mysqli_stmt_bind_param($stmt, 's', $mail);
+            $stmt = mysqli_prepare($link, 'CALL increment_user_login(?)');
+            if ($stmt === false) {
+                throw new RuntimeException('Konnte Prozedur increment_user_login nicht vorbereiten.');
+            }
+
+            mysqli_stmt_bind_param($stmt, 'i', $userId);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
+
+            while (mysqli_more_results($link)) {
+                mysqli_next_result($link);
+            }
         });
     }
 
@@ -131,5 +138,26 @@ class AuthController
         } finally {
             mysqli_close($link);
         }
+    }
+
+    private function findUserIdByEmail($link, string $email): ?int
+    {
+        $stmt = mysqli_prepare($link, 'SELECT id FROM benutzer WHERE email = ? LIMIT 1');
+        if ($stmt === false) {
+            return null;
+        }
+
+        mysqli_stmt_bind_param($stmt, 's', $email);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $userId);
+
+        $result = mysqli_stmt_fetch($stmt);
+        mysqli_stmt_close($stmt);
+
+        if ($result === true && $userId !== null) {
+            return (int)$userId;
+        }
+
+        return null;
     }
 }
