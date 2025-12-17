@@ -11,6 +11,7 @@
   "require": {
     "eftec/bladeone": "^4.19",
     "ext-mysqli": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "monolog/monolog": "^3.9"
   }
 }

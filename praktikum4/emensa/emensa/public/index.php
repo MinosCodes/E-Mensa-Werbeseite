@@ -29,6 +29,8 @@ try {
 }
 
 use eftec\bladeone\BladeOne;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 /* Routing Script for PHP Dev Server */
 $verbosity = VERBOSITY;
@@ -292,6 +294,26 @@ function view($viewname, $viewargs = array())
     $blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
 
     return $blade->run($viewname, $viewargs);
+}
+
+function logger(): Logger
+{
+    static $logger = null;
+
+    if ($logger instanceof Logger) {
+        return $logger;
+    }
+
+    $logDir = dirname(__DIR__) . '/storage/logs';
+    if (!is_dir($logDir)) {
+        mkdir($logDir, 0775, true);
+    }
+
+    $logFile = $logDir . '/emensa.log';
+    $logger = new Logger('emensa');
+    $logger->pushHandler(new StreamHandler($logFile, Logger::DEBUG));
+
+    return $logger;
 }
 
 /**

@@ -23,11 +23,19 @@ class AuthController
         if ($this->isAuthenticated($email, $password)) {
             $this->recordSuccessfulLogin($email);
             $_SESSION['user_email'] = $email;
+            logger()->info('User logged in', [
+                'email' => $email,
+                'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown'
+            ]);
             header('Location: /');
             exit;
         }
 
         $this->recordFailedLogin($email);
+        logger()->warning('Failed login attempt', [
+            'email' => $email,
+            'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown'
+        ]);
         header('Location: /anmeldung?error=Anmeldung%20fehlgeschlagen');
         exit;
     }
@@ -38,6 +46,7 @@ class AuthController
             session_start();
         }
 
+        $email = $_SESSION['user_email'] ?? null;
         $_SESSION = [];
 
         if (ini_get('session.use_cookies')) {
@@ -46,6 +55,11 @@ class AuthController
         }
 
         session_destroy();
+
+        logger()->info('User logged out', [
+            'email' => $email,
+            'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown'
+        ]);
 
         header('Location: /');
         exit;

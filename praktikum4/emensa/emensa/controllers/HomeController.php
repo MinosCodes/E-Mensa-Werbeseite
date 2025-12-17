@@ -8,6 +8,11 @@ class HomeController
 {
     public function index(RequestData $request) {
         $this->ensureSession();
+        logger()->info('Homepage accessed', [
+            'path' => $request->getRequestUri(),
+            'method' => $request->method,
+            'user' => $_SESSION['user_email'] ?? null
+        ]);
 
         $sortDirection = $this->resolveSortDirection($request->getGetData());
         $postData = $request->getPostData();
