@@ -42,3 +42,8 @@ FROM   kategorie AS k
               ON g.id = ghk.gericht_id
              AND g.vegetarisch = 1
 ORDER  BY k.name, g.name;
+
+
+SELECT * FROM view_suppengerichte;
+SELECT * FROM view_anmeldungen;
+SELECT * FROM view_kategoriegerichte_vegetarisch LIMIT 20;
